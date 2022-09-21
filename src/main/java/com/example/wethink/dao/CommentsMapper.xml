@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.wethink.dao.CommentsMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.wethink.model.Comments">
+        <result column="id" jdbcType="VARCHAR" property="id" />
+        <result column="article_id" jdbcType="VARCHAR" property="articleId" />
+        <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+        <result column="user_id" jdbcType="VARCHAR" property="userId" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    </resultMap>
+
+    <select id="findCommentsByParentId" resultMap="BaseResultMap" resultType="com.example.wethink.model.Comments">
+        select * from tb_comments where parent_id = #{parentId} order by create_time desc
+    </select>
+    <select id="findCommentsByUserId" resultMap="BaseResultMap" resultType="com.example.wethink.model.Comments">
+        select * from tb_comments where user_id = #{userId} order by create_time desc
+    </select>
+    <select id="findCommentsAll" resultMap="BaseResultMap" resultType="com.example.wethink.model.Comments">
+        select * from tb_comments order by create_time desc
+    </select>
+    <insert id="saveComments" parameterType="com.example.wethink.model.Comments">
+        insert into tb_comments (id, article_id, parent_id, user_id, content, username, create_time) values(#{id}, #{articleId}, #{parentId}, #{userId}, #{content}, #{username}, #{createTime})
+    </insert>
+</mapper>
